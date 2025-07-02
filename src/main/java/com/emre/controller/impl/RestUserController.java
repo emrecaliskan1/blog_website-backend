@@ -37,4 +37,20 @@ public class RestUserController implements IRestUserController {
     public RootEntity<DtoUser> saveUser(@RequestBody DtoUserIU dtoUserIU) {
         return ok(userService.saveUser(dtoUserIU));
     }
+
+    @PutMapping("/{id}")
+    @Override
+    public RootEntity<DtoUser> updateUser(@PathVariable Long id, @RequestBody DtoUserIU dtoUserIU) {
+        return ok(userService.updateUser(id, dtoUserIU));
+    }
+
+    @DeleteMapping("/{id}")
+    @Override
+    public void deleteUser(@PathVariable Long id) {
+       userService.deleteUser(id);
+    }
+
+
+
+
 }

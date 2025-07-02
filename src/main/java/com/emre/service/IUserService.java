@@ -13,4 +13,7 @@ public interface IUserService {
 
     public DtoUser saveUser(DtoUserIU dtoUserIU);
 
+    public DtoUser updateUser(Long id, DtoUserIU dtoUserIU);
+
+    public void deleteUser(Long id);
 }

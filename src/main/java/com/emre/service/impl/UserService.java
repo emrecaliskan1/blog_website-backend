@@ -57,4 +57,24 @@ public class UserService implements IUserService {
         return dtoUser;
     }
 
+    @Override
+    public DtoUser updateUser(Long id, DtoUserIU dtoUserIU) {
+        Optional<User> optUser = userRepository.findById(id);
+        DtoUser dtoUser = new DtoUser();
+        if(optUser.isPresent()){
+            User foundUser = optUser.get();
+            foundUser.setUsername(dtoUserIU.getUsername());
+            foundUser.setPassword(dtoUserIU.getPassword());
+            userRepository.save(foundUser);
+            BeanUtils.copyProperties(foundUser, dtoUser);
+            return dtoUser;
+        }
+        return null;
+    }
+
+    @Override
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
+    }
+
 }
