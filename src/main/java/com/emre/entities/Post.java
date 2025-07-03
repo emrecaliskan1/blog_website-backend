@@ -25,8 +25,7 @@ public class Post {
 
     private String title;
 
-    @Lob
-    @Column(columnDefinition = "text")
+    @Column(columnDefinition = "TEXT")
     private String text;
 
 

@@ -9,7 +9,7 @@ public interface IUserService {
 
     public List<DtoUser> getAllUsers();
 
-    public DtoUser getUserById(Long id);
+    public DtoUser getOneUserById(Long id);
 
     public DtoUser saveUser(DtoUserIU dtoUserIU);
 

@@ -38,7 +38,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public DtoUser getUserById(Long id) {
+    public DtoUser getOneUserById(Long id) {
         DtoUser dtoUser = new DtoUser();
         Optional<User> optUser = userRepository.findById(id);
         if(optUser.isEmpty()){
