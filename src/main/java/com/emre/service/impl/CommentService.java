@@ -52,7 +52,7 @@ public class CommentService implements ICommentService {
         Post post = postService.getOnePostById(dtoCommentIU.getPostId());
         if (dtoUser != null && post != null) {
             Comment commentToSave = new Comment();
-            commentToSave.setId(dtoCommentIU.getId());
+            //commentToSave.setId(dtoCommentIU.getId());
             commentToSave.setPost(post);
             commentToSave.setText(dtoCommentIU.getText());
             commentToSave.setUser(dtoUser.toUser());

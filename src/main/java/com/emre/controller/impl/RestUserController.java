@@ -29,7 +29,7 @@ public class RestUserController implements IRestUserController {
     @GetMapping("/{id}")
     @Override
     public RootEntity<DtoUser> getUserById(@PathVariable Long id) {
-        return ok(userService.getUserById(id));
+        return ok(userService.getOneUserById(id));
     }
 
     @PostMapping("/save")

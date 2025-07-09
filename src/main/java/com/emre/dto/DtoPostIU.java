@@ -7,8 +7,6 @@ import lombok.Setter;
 @Setter
 public class DtoPostIU {
 
-    Long id;
-
     String text;
 
     String title;

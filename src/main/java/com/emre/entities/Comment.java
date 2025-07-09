@@ -30,8 +30,7 @@ public class Comment {
     @JsonIgnore
     private User user;
 
-    @Lob
-    @Column(columnDefinition = "text")
+    @Column(columnDefinition = "TEXT")
     private String text;
 
 }

@@ -7,8 +7,6 @@ import lombok.Setter;
 @Setter
 public class DtoCommentIU {
 
-    Long id;
-
     Long userId;
 
     Long postId;

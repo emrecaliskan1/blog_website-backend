@@ -2,6 +2,7 @@ package com.emre.controller.impl;
 
 import com.emre.controller.IRestPostController;
 import com.emre.dto.DtoPostIU;
+import com.emre.dto.DtoPostResponse;
 import com.emre.dto.DtoPostUpdate;
 import com.emre.entities.Post;
 import com.emre.service.IPostService;
@@ -20,7 +21,7 @@ public class RestPostController implements IRestPostController {
 
     @GetMapping
     @Override
-    public List<Post> getAllPosts(@RequestParam Optional<Long> userId) {
+    public List<DtoPostResponse> getAllPosts(@RequestParam Optional<Long> userId) {
         return postService.getAllPosts(userId);
     }
 

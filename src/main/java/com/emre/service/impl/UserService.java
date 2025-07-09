@@ -77,4 +77,10 @@ public class UserService implements IUserService {
         userRepository.deleteById(id);
     }
 
+    @Override
+    public User getUserEntityById(Long userId) {
+        return userRepository.findById(userId)
+                .orElse(null);
+    }
+
 }

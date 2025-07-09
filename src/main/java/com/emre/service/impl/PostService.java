@@ -1,6 +1,7 @@
 package com.emre.service.impl;
 
 import com.emre.dto.DtoPostIU;
+import com.emre.dto.DtoPostResponse;
 import com.emre.dto.DtoPostUpdate;
 import com.emre.dto.DtoUser;
 import com.emre.entities.Post;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PostService implements IPostService {
@@ -26,13 +28,17 @@ public class PostService implements IPostService {
 
 
     @Override
-    public List<Post> getAllPosts(Optional<Long> userId) {
-
-        if(userId.isPresent()){
-            return postRepository.findByUserId(userId.get());
+    public List<DtoPostResponse> getAllPosts(Optional<Long> userId) {
+        List<Post> list;
+        if (userId.isPresent()) {
+            list = postRepository.findByUserId(userId.get());
+        } else {
+            list = postRepository.findAll();
         }
 
-        return postRepository.findAll();
+        return list.stream()
+                .map(DtoPostResponse::new)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -43,15 +49,15 @@ public class PostService implements IPostService {
 
     @Override
     public Post createOnePost(DtoPostIU dtoPostIU) {
-        DtoUser dtoUser = userService.getOneUserById(dtoPostIU.getUserId());
-        if (dtoUser == null) {
+        //DtoUser dtoUser = userService.getOneUserById(dtoPostIU.getUserId());
+        User user = userService.getUserEntityById(dtoPostIU.getUserId());
+        if (user == null) {
             return null;
         }
-        User user = new User();
-        BeanUtils.copyProperties(dtoUser, user);
+        //User user = new User();
+        //BeanUtils.copyProperties(user, user);
 
         Post post = new Post();
-        post.setId(dtoPostIU.getId());
         post.setTitle(dtoPostIU.getTitle());
         post.setText(dtoPostIU.getText());
         post.setUser(user);
