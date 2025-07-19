@@ -50,6 +50,17 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public DtoUser getOneUserByUsername(String username) {
+        DtoUser dtoUser = new DtoUser();
+        User user = userRepository.findByUsername(username);
+        if(user == null){
+            return null;
+        }
+        BeanUtils.copyProperties(user, dtoUser);
+        return dtoUser;
+    }
+
+    @Override
     public DtoUser saveUser(DtoUserIU dtoUserIU) {
         DtoUser dtoUser = new DtoUser();
         User savedUser = userRepository.save(createUser(dtoUserIU));

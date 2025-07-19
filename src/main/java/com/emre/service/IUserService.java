@@ -12,6 +12,8 @@ public interface IUserService {
 
     public DtoUser getOneUserById(Long id);
 
+    public DtoUser getOneUserByUsername(String username);
+
     public DtoUser saveUser(DtoUserIU dtoUserIU);
 
     public DtoUser updateUser(Long id, DtoUserIU dtoUserIU);
