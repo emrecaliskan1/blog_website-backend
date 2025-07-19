@@ -1,6 +1,7 @@
 package com.emre.controller.impl;
 
 import com.emre.dto.DtoLikeIU;
+import com.emre.dto.DtoLikeResponse;
 import com.emre.entities.Like;
 import com.emre.service.ILikeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,8 @@ public class RestLikeController implements com.emre.controller.IRestLikeControll
 
     @GetMapping
     @Override
-    public List<DtoLikeIU> getAllLikes(@RequestParam Optional<Long> userId,
-                                       @RequestParam Optional<Long> postId) {
+    public List<DtoLikeResponse> getAllLikes(@RequestParam Optional<Long> userId,
+                                             @RequestParam Optional<Long> postId) {
         return likeService.getAllLikesWithParam(userId, postId);
     }
 

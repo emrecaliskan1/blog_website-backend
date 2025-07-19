@@ -1,21 +1,21 @@
 package com.emre.dto;
 
 import com.emre.entities.Like;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class DtoLikeIU {
 
-    private Long id;
+    //private Long id;
 
     private Long userId;
 
     private Long postId;
 
     public DtoLikeIU(Like entity) {
-        this.id = entity.getId();
+       // this.id = entity.getId();
         this.userId = entity.getUser().getId();
         this.postId = entity.getPost().getId();
     }

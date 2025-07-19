@@ -1,12 +1,12 @@
 package com.emre.service.impl;
 
-import com.emre.dto.DtoPostIU;
-import com.emre.dto.DtoPostResponse;
-import com.emre.dto.DtoPostUpdate;
-import com.emre.dto.DtoUser;
+import com.emre.dto.*;
+import com.emre.entities.Like;
 import com.emre.entities.Post;
 import com.emre.entities.User;
+import com.emre.repository.LikeRepository;
 import com.emre.repository.PostRepository;
+import com.emre.service.ILikeService;
 import com.emre.service.IPostService;
 import com.emre.service.IUserService;
 import org.springframework.beans.BeanUtils;
@@ -26,6 +26,13 @@ public class PostService implements IPostService {
     @Autowired
     private IUserService userService;
 
+    @Autowired
+    private ILikeService likeService;
+
+    //public void setLikeService(ILikeService likeService) {
+        //this.likeService = likeService;
+    //}
+
 
     @Override
     public List<DtoPostResponse> getAllPosts(Optional<Long> userId) {
@@ -36,8 +43,9 @@ public class PostService implements IPostService {
             list = postRepository.findAll();
         }
 
-        return list.stream()
-                .map(DtoPostResponse::new)
+       return list.stream().map(p -> {
+           List<DtoLikeResponse> likes = likeService.getAllLikesWithParam(Optional.ofNullable(null), Optional.of(p.getId()));
+           return new DtoPostResponse(p,likes);})
                 .collect(Collectors.toList());
     }
 

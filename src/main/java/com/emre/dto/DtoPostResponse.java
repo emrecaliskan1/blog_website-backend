@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -22,12 +24,15 @@ public class DtoPostResponse {
 
     String text;
 
-    public DtoPostResponse(Post entity){
+    List<DtoLikeResponse> postLikes;
+
+    public DtoPostResponse(Post entity, List<DtoLikeResponse> likes){
         this.id = entity.getId();
         this.userId = entity.getUser().getId();
         this.userName = entity.getUser().getUsername();
         this.title = entity.getTitle();
         this.text = entity.getText();
+        this.postLikes = likes;
     }
 
 

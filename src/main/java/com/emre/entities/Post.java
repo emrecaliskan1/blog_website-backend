@@ -7,6 +7,8 @@ import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.util.List;
+
 @Entity
 @Table(name = "posts")
 @Getter
@@ -27,6 +29,9 @@ public class Post {
 
     @Column(columnDefinition = "TEXT")
     private String text;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<Like> postLikes;
 
 
 }
