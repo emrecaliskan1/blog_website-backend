@@ -2,10 +2,14 @@ package com.emre.security;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.SignatureException;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 @Component
@@ -13,9 +17,16 @@ public class JwtTokenProvider {
 
     @Value("${questapp.app.secret}")
     private String APP_SECRET;
+    private SecretKey key;
 
     @Value("${questapp.app.expires.in}")
     private Long EXPIRES_IN;
+
+    @PostConstruct
+    public void init() {
+        this.key = new SecretKeySpec(APP_SECRET.getBytes(StandardCharsets.UTF_8), SignatureAlgorithm.HS256.getJcaName());
+    }
+
 
     public String generateJwtToken(Authentication auth){
         JwtUserDetails userDetails = (JwtUserDetails) auth.getPrincipal();
@@ -24,13 +35,13 @@ public class JwtTokenProvider {
                 .setSubject(Long.toString(userDetails.getId()))
                 .setIssuedAt(new Date())
                 .setExpiration(expireDate)
-                .signWith(io.jsonwebtoken.SignatureAlgorithm.HS256, APP_SECRET)
+                .signWith(key)
                 .compact();
     }
 
     Long getUserIdFromJwt(String token){
         Claims claims = Jwts.parser()
-                .setSigningKey(APP_SECRET)
+                .setSigningKey(key)
                 .parseClaimsJws(token)
                 .getBody();
         return Long.parseLong(claims.getSubject());
@@ -39,7 +50,7 @@ public class JwtTokenProvider {
     boolean validateToken(String token) {
         try {
             Jwts.parser()
-                    .setSigningKey(APP_SECRET)
+                    .setSigningKey(key)
                     .parseClaimsJws(token);
             return !isTokenExpired(token);
         } catch (SignatureException e) {
@@ -57,7 +68,7 @@ public class JwtTokenProvider {
 
     private boolean isTokenExpired(String token) {
         Claims claims = Jwts.parser()
-                .setSigningKey(APP_SECRET)
+                .setSigningKey(key)
                 .parseClaimsJws(token)
                 .getBody();
         Date expiration = claims.getExpiration();

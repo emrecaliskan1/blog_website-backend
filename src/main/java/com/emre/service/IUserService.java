@@ -21,4 +21,6 @@ public interface IUserService {
     public void deleteUser(Long id);
 
     User getUserEntityById(Long userId);
+
+    List<Object> getUserActivity(Long userId);
 }

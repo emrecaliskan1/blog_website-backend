@@ -1,7 +1,10 @@
 package com.emre.repository;
 
+import com.emre.entities.Comment;
 import com.emre.entities.Like;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,8 +17,7 @@ public interface LikeRepository extends JpaRepository<Like, Long> {
 
     List<Like> findByPostId(Long aLong);
 
-    // Defne any custom query methods if needed
-    // For example, to find likes by user or post, you can add methods like:
-    // List<Like> findByUserId(Long userId);
-    // List<Like> findByPostId(Long postId);
+    @Query(value = "select * from questapp.likes where post_id in :postIds limit 5",nativeQuery = true)
+    List<Like> findUserLikesByPostId(@Param("postIds") List<Long> postIds);
+
 }

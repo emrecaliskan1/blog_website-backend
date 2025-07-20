@@ -12,6 +12,7 @@ import com.emre.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,6 +57,7 @@ public class CommentService implements ICommentService {
             commentToSave.setPost(post);
             commentToSave.setText(dtoCommentIU.getText());
             commentToSave.setUser(dtoUser.toUser());
+            commentToSave.setCreateDate(new Date());
             return commentRepository.save(commentToSave);
         }
         return null;

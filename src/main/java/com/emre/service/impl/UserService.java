@@ -3,6 +3,9 @@ package com.emre.service.impl;
 import com.emre.dto.DtoUser;
 import com.emre.dto.DtoUserIU;
 import com.emre.entities.User;
+import com.emre.repository.CommentRepository;
+import com.emre.repository.LikeRepository;
+import com.emre.repository.PostRepository;
 import com.emre.repository.UserRepository;
 import com.emre.service.IUserService;
 import org.springframework.beans.BeanUtils;
@@ -18,6 +21,15 @@ public class UserService implements IUserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PostRepository postRepository;
+
+    @Autowired
+    private CommentRepository commentRepository;
+
+    @Autowired
+    private LikeRepository likeRepository;
 
     private User createUser(DtoUserIU dtoUserIU) {
         User user = new User();
@@ -92,6 +104,17 @@ public class UserService implements IUserService {
     public User getUserEntityById(Long userId) {
         return userRepository.findById(userId)
                 .orElse(null);
+    }
+
+    @Override
+    public List<Object> getUserActivity(Long userId) {
+        List<Long> postIds = postRepository.findTopByUserId(userId);
+        if(postIds.isEmpty()){
+            return null;
+        }
+        System.out.println(commentRepository.findUserCommentsByPostId(postIds));
+        return null;
+
     }
 
 }

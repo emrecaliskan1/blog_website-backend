@@ -8,6 +8,8 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.context.annotation.ComponentScan;
 
+import java.util.Date;
+
 @Entity
 @Table(name = "comments")
 @Getter
@@ -32,5 +34,8 @@ public class Comment {
 
     @Column(columnDefinition = "TEXT")
     private String text;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createDate;
 
 }

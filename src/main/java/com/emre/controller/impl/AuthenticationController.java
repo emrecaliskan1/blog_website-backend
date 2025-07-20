@@ -1,5 +1,6 @@
 package com.emre.controller.impl;
 
+import com.emre.dto.AuthResponse;
 import com.emre.dto.DtoUser;
 import com.emre.dto.DtoUserIU;
 import com.emre.dto.UserRequest;
@@ -36,20 +37,27 @@ public class AuthenticationController {
 
 
     @PostMapping("/login")
-    public String login(@RequestBody UserRequest loginRequest){
+    public AuthResponse login(@RequestBody UserRequest loginRequest){
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(
                 loginRequest.getUsername(), loginRequest.getPassword());
         Authentication auth = authenticationManager.authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(auth);
         String jwtToken = jwtTokenProvider.generateJwtToken(auth);
-        return "Bearer " + jwtToken;
+        DtoUser dtoUser = userService.getOneUserByUsername(loginRequest.getUsername());
+        dtoUser.toUser();
+        AuthResponse authResponse = new AuthResponse();
+        authResponse.setMessage("Bearer " + jwtToken);
+        authResponse.setUserId(dtoUser.getId());
+        return authResponse;
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody UserRequest registerRequest){
+    public ResponseEntity<AuthResponse> register(@RequestBody UserRequest registerRequest){
+        AuthResponse authResponse= new AuthResponse();
         if (userService.getOneUserByUsername(registerRequest.getUsername()) != null){
-            return new ResponseEntity<>("Username already in use.", HttpStatus.BAD_REQUEST);
+            authResponse.setMessage("Username already in use.");
+            return new ResponseEntity<>(authResponse, HttpStatus.BAD_REQUEST);
         }
         DtoUserIU dtoUser = new DtoUserIU();
         User user = new User();
@@ -57,7 +65,8 @@ public class AuthenticationController {
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         BeanUtils.copyProperties(user, dtoUser);
         userService.saveUser(dtoUser);
-            return new ResponseEntity<>("User registered successfully.", HttpStatus.CREATED);
+        authResponse.setMessage("User registered successfully.");
+        return new ResponseEntity<>(authResponse, HttpStatus.CREATED);
     }
 
 }
