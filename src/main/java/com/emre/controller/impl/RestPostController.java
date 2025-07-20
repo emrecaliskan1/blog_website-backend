@@ -47,4 +47,9 @@ public class RestPostController implements IRestPostController {
     public void deleteOnePost(@PathVariable Long postId) {
         postService.deleteOnePost(postId);
     }
+
+    @GetMapping("-likes/{postId}")
+    public DtoPostResponse getOnePostByIdWithLikes(@PathVariable Long postId) {
+        return postService.getOnePostByIdWithLikes(postId);
+    }
 }

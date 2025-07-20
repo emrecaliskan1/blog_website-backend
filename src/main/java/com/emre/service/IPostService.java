@@ -19,4 +19,6 @@ public interface IPostService {
     Post updateOnePost(Long postId, DtoPostUpdate dtoPostUpdate);
 
     void deleteOnePost(Long postId);
+
+    DtoPostResponse getOnePostByIdWithLikes(Long postId);
 }

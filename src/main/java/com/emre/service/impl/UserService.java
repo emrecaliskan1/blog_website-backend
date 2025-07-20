@@ -1,7 +1,11 @@
 package com.emre.service.impl;
 
+import com.emre.dto.DtoLikeResponse;
 import com.emre.dto.DtoUser;
 import com.emre.dto.DtoUserIU;
+import com.emre.entities.Comment;
+import com.emre.entities.Like;
+import com.emre.entities.Post;
 import com.emre.entities.User;
 import com.emre.repository.CommentRepository;
 import com.emre.repository.LikeRepository;
@@ -15,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService implements IUserService {
@@ -112,8 +117,20 @@ public class UserService implements IUserService {
         if(postIds.isEmpty()){
             return null;
         }
-        System.out.println(commentRepository.findUserCommentsByPostId(postIds));
-        return null;
+
+        List<Post> posts = postRepository.findByIdIn(postIds);
+        List<Object> comments = commentRepository.findUserCommentsByPostId(postIds);
+        List<Object> likes = likeRepository.findUserLikesByPostId(postIds);
+        //List<DtoLikeResponse> likeDtos = likes.stream()
+        //        .map(DtoLikeResponse::new)
+        //        .collect(Collectors.toList());
+        //System.out.println(likes);
+        //System.out.println(likeDtos);
+        List<Object> result = new ArrayList<>();
+        result.addAll(posts);
+        result.addAll(comments);
+        result.addAll(likes);
+        return result;
 
     }
 

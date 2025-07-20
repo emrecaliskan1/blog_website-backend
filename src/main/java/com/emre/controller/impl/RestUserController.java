@@ -4,8 +4,8 @@ import com.emre.controller.RootEntity;
 import com.emre.controller.IRestUserController;
 import com.emre.dto.DtoUser;
 import com.emre.dto.DtoUserIU;
+import com.emre.dto.UserResponse;
 import com.emre.service.IUserService;
-import jakarta.persistence.criteria.Root;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

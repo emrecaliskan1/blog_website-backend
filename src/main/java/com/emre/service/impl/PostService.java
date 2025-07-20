@@ -53,6 +53,13 @@ public class PostService implements IPostService {
     @Override
     public Post getOnePostById(Long postId) {
         return postRepository.findById(postId).orElse(null);
+    }
+
+    @Override
+    public DtoPostResponse getOnePostByIdWithLikes(Long postId) {
+        Post post = postRepository.findById(postId).orElse(null);
+        List<DtoLikeResponse> likes = likeService.getAllLikesWithParam(Optional.ofNullable(null), Optional.of(postId));
+        return new DtoPostResponse(post, likes);
 
     }
 
