@@ -9,5 +9,7 @@ public class AuthResponse {
 
     Long userId;
 
+    String accessToken;
 
+    String refreshToken;
 }

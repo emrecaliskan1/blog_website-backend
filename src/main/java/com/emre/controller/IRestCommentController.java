@@ -1,5 +1,6 @@
 package com.emre.controller;
 
+import com.emre.dto.CommentResponse;
 import com.emre.dto.DtoCommentIU;
 import com.emre.dto.DtoCommentUpdate;
 import com.emre.entities.Comment;
@@ -12,7 +13,7 @@ import java.util.Optional;
 
 public interface IRestCommentController {
 
-    public List<Comment> getAllComments( Optional<Long> userId,  Optional<Long> postId);
+    public List<CommentResponse> getAllComments(Optional<Long> userId, Optional<Long> postId);
 
     public Comment getOneComment( Long commentId);
 

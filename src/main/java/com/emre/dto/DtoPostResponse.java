@@ -18,7 +18,7 @@ public class DtoPostResponse {
 
     Long userId;
 
-    String userName;
+    String username;
 
     String title;
 
@@ -29,7 +29,7 @@ public class DtoPostResponse {
     public DtoPostResponse(Post entity, List<DtoLikeResponse> likes){
         this.id = entity.getId();
         this.userId = entity.getUser().getId();
-        this.userName = entity.getUser().getUsername();
+        this.username = entity.getUser().getUsername();
         this.title = entity.getTitle();
         this.text = entity.getText();
         this.postLikes = likes;

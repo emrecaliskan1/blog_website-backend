@@ -39,6 +39,13 @@ public class JwtTokenProvider {
                 .compact();
     }
 
+    public String generateJwtTokenByUserId(Long userId) {
+        Date expireDate = new Date(new Date().getTime() + EXPIRES_IN);
+        return Jwts.builder().setSubject(Long.toString(userId))
+                .setIssuedAt(new Date()).setExpiration(expireDate)
+                .signWith(SignatureAlgorithm.HS256, APP_SECRET).compact();
+    }
+
     Long getUserIdFromJwt(String token){
         Claims claims = Jwts.parser()
                 .setSigningKey(key)

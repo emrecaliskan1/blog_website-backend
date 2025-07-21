@@ -134,4 +134,9 @@ public class UserService implements IUserService {
 
     }
 
+    @Override
+    public User saveOneUser(User user) {
+        return userRepository.save(user);
+    }
+
 }

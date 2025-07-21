@@ -23,4 +23,6 @@ public interface IUserService {
     User getUserEntityById(Long userId);
 
     List<Object> getUserActivity(Long userId);
+
+    public User saveOneUser(User user);
 }

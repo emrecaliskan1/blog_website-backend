@@ -1,6 +1,7 @@
 package com.emre.controller.impl;
 
 import com.emre.controller.IRestCommentController;
+import com.emre.dto.CommentResponse;
 import com.emre.dto.DtoCommentIU;
 import com.emre.dto.DtoCommentUpdate;
 import com.emre.entities.Comment;
@@ -20,7 +21,7 @@ public class RestCommentController implements IRestCommentController {
 
     @GetMapping
     @Override
-    public List<Comment> getAllComments(@RequestParam Optional<Long> userId, @RequestParam Optional<Long> postId){
+    public List<CommentResponse> getAllComments(@RequestParam Optional<Long> userId, @RequestParam Optional<Long> postId){
         return commentService.getAllCommentsWithParam(userId, postId);
     }
 
