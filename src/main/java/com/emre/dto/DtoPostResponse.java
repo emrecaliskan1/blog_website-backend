@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -26,6 +27,9 @@ public class DtoPostResponse {
 
     List<DtoLikeResponse> postLikes;
 
+    Date createdAt;
+
+
     public DtoPostResponse(Post entity, List<DtoLikeResponse> likes){
         this.id = entity.getId();
         this.userId = entity.getUser().getId();
@@ -33,6 +37,7 @@ public class DtoPostResponse {
         this.title = entity.getTitle();
         this.text = entity.getText();
         this.postLikes = likes;
+        this.createdAt = entity.getCreatedAt();
     }
 
 

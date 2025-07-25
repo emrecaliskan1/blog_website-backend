@@ -1,15 +1,12 @@
 package com.emre.service.impl;
 
 import com.emre.dto.*;
-import com.emre.entities.Like;
 import com.emre.entities.Post;
 import com.emre.entities.User;
-import com.emre.repository.LikeRepository;
 import com.emre.repository.PostRepository;
 import com.emre.service.ILikeService;
 import com.emre.service.IPostService;
 import com.emre.service.IUserService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,11 +26,6 @@ public class PostService implements IPostService {
 
     @Autowired
     private ILikeService likeService;
-
-    //public void setLikeService(ILikeService likeService) {
-        //this.likeService = likeService;
-    //}
-
 
     @Override
     public List<DtoPostResponse> getAllPosts(Optional<Long> userId) {
@@ -58,6 +50,9 @@ public class PostService implements IPostService {
     @Override
     public DtoPostResponse getOnePostByIdWithLikes(Long postId) {
         Post post = postRepository.findById(postId).orElse(null);
+        if(post == null) {
+            return null;
+        }
         List<DtoLikeResponse> likes = likeService.getAllLikesWithParam(Optional.ofNullable(null), Optional.of(postId));
         return new DtoPostResponse(post, likes);
 
@@ -70,14 +65,11 @@ public class PostService implements IPostService {
         if (user == null) {
             return null;
         }
-        //User user = new User();
-        //BeanUtils.copyProperties(user, user);
-
         Post post = new Post();
         post.setTitle(dtoPostIU.getTitle());
         post.setText(dtoPostIU.getText());
         post.setUser(user);
-        post.setCreateDate(new Date());
+        post.setCreatedAt(new Date());
         return postRepository.save(post);
     }
 

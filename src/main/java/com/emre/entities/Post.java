@@ -1,6 +1,5 @@
 package com.emre.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,7 +34,7 @@ public class Post {
     private List<Like> postLikes;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createDate;
+    private Date createdAt;
 
 
 }
